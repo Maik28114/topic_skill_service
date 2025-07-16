@@ -60,8 +60,8 @@ if __name__== '__main__':
     app.run(debug=True, port=5000)
     # Wenn dieses Skript direkt ausgeführt wird (nicht importiert),
     # wird der Webserver gestartet:
-    # - Im Debug-Modus (zeigt Fehler im Browser, nützlich für Entwicklung),
-    # - auf Port 5000 (Standardport für lokale Flask-Apps)
+    # Im Debug-Modus (zeigt Fehler im Browser, nützlich für Entwicklung),
+    # auf Port 5000 (Standardport für lokale Flask-Apps)
 
 
 
