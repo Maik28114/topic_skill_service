@@ -37,31 +37,7 @@ def read_json_file(filepath):
             # json.load(file) liest die Datei und wandelt sie in Python-Objekte (z. B. Liste oder Dictionary) um.       
     except json.JSONDecodeError:
         print(f"Fehler beim Dekodieren der JSON-Datei: {filepath}. Bitte JSON-Syntax überprüfen!")
-        return []
-        # Falls die Datei zwar existiert, aber fehlerhafte JSON-Syntax hat:
-        # Zeige eine Fehlermeldung an und gib eine leere Liste zurück.
-    except Exception as e:
-        print(f"Ein unerwarteter Fehler ist aufgetreten beim Lesen von {filepath}: {e}")
-        return []
-        # Jede andere Art von Fehler (z. B. Zugriffsfehler):
-        # Gib eine Fehlermeldung aus und gib ebenfalls eine leere Liste zurück.
-
-
-#### 6. Route "/topics" definieren: Gibt Themen zurück ####
-@app.route('/topics', methods=['GET'])
-def get_topics():
-    topics = read_json_file(TOPICS_FILE)
-    # Liest den Inhalt der Datei "topics.json" anhand des zuvor definierten Pfades.
-    return jsonify(topics)
-    # Verpackt die eingelesenen Daten in eine JSON-Antwort und sendet sie an den Client (z. B. Browser oder API-Nutzer).
-
-#### 7. Startpunkt der Anwendung ####
-if __name__== '__main__':
-    app.run(debug=True, port=5000)
-    # Wenn dieses Skript direkt ausgeführt wird (nicht importiert),
-    # wird der Webserver gestartet:
-    # Im Debug-Modus (zeigt Fehler im Browser, nützlich für Entwicklung),
-    # auf Port 5000 (Standardport für lokale Flask-Apps)
+  
 
 
 
