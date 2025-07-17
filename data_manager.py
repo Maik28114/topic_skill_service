@@ -4,7 +4,7 @@ import os
 
 class JsonDataManager:
 
-        def __init__(self):
+    def __init__(self):
         pass
 
 
@@ -34,9 +34,6 @@ class JsonDataManager:
         except Exception as e:
             print(f"Ein unerwarteter Fehler ist aufgetreten beim Schreiben von {filepath}: {e}")
             return False
-        
-        
-
 
 
 
