@@ -1,42 +1,47 @@
 import json
 import os
+from flask import Flask, jsonify
+from data_manager import JsonDataManager
 
+app = Flask(__name__)
+data_manager = JsonDataManager()
 
-class JsonDataManager:
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+TOPICS_FILE = os.path.join(DATA_DIR, 'topics.json')
+SKILLS_FILE = os.path.join(DATA_DIR, 'skills.json')
 
-    def __init__(self):
-        pass
-
-
-    def read_data(self, filepath):
-        if not os.path.exists(filepath):
-            return []
-    
-        try:
-            with open(filepath, 'r', encoding='utf-8') as file:
-                return json.load(file)
-        except json.JSONDecodeError:
-            print(f"Fehler beim Dekodieren der JSON-Datei: {filepath}. Bitte JSON-Syntax überprüfen!")
-            return []
-        except Exception as e:
-            print(f"Ein unerwarteter Fehler ist aufgetreten beim Lesen von {filepath}: {e}")
-            return []
-
-
-    def write_data(self, filepath, data):
-        
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-
-        try:
-            with open(filepath, 'w', encoding='utf-8') as file:
-                json.dump(data, file, indent=4)
-                return True
-        except Exception as e:
-            print(f"Ein unerwarteter Fehler ist aufgetreten beim Schreiben von {filepath}: {e}")
-            return False
-        
+@app.route('/')
+def hello_world():
+    return 'Hello from Topic and Skill Service!'
 
 
 
 
 
+@app.route('/topics', methods=['GET'])
+def get_topics():
+    topics = data_manager.read_data(TOPICS_FILE)
+    return jsonify(topics)
+
+@app.route('/topics/<string:id>', methods=['GET'])
+def get_topic_id(id):
+    topics = data_manager.read_data(TOPICS_FILE)
+    topic = next((topic for topic in topics if topic.get('id').lower() == id.lower()), None)
+    if topic: 
+        return jsonify(topic)
+    return jsonify({"[ERROR]": "Topic ID not found"}), 404
+
+
+@app.route("/skills", methods=["GET"])
+def get_skills():
+    skills = data_manager.read_data(SKILLS_FILE)
+    return jsonify(skills)
+
+
+
+
+
+
+
+if __name__== '__main__':
+    app.run(debug=True, port=5000)
