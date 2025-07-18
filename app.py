@@ -37,7 +37,13 @@ def get_skills():
     skills = data_manager.read_data(SKILLS_FILE)
     return jsonify(skills)
 
-
+@app.route('/skills/<string:id>', methods=['GET'])
+def get_skills_id(id):
+    skills = data_manager.read_data(SKILLS_FILE)
+    skill = next((skill for skill in skills if skill.get('id').lower() == id.lower()), None)
+    if skill:
+        return jsonify(skill)
+    return jsonify({"[ERROR]": "Skill ID not found"}), 404
 
 
 
